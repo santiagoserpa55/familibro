@@ -1,0 +1,10 @@
+<div class="policies-container">
+  <h1 class="titulo">Politicas</h1>
+  <div class="policy-item" *ngFor="let item of policies">
+    <img [src]="item.image" [alt]="item.title" class="policy-image" />
+    <div class="policy-details">
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.description }}</p>
+    </div>
+  </div>
+</div>

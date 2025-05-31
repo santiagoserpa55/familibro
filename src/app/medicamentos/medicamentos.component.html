@@ -1,0 +1,69 @@
+<mat-expansion-panel [expanded]="true">
+<mat-expansion-panel-header>
+  <mat-panel-title>Buscar Medicamentos</mat-panel-title>
+      </mat-expansion-panel-header>
+<form [formGroup]="formulario" (ngSubmit)="applyFilter()">
+    <mat-form-field appearance="outline" class="compact">
+    <mat-label>Buscar Medicamentos</mat-label>
+    <input matInput placeholder="type name here..." formControlName="busqueda">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Cum</mat-label>
+      <mat-select formControlName="cum">
+        <mat-option *ngFor="let cum of cum" [value]="cum">
+          {{ cum }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Atc</mat-label>
+      <mat-select formControlName="atc">
+        <mat-option *ngFor="let atc of atc" [value]="atc">
+          {{ atc }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <button type="submit" class="btn-consultar">
+        <mat-icon>search</mat-icon> Consultar
+      </button>
+      <button class="btn-limpiar"
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="clearFilters()"
+      ><mat-icon>clear</mat-icon>
+        Limpiar Filtros
+      </button>
+    </div>
+</form>
+</mat-expansion-panel>
+<br>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="cum">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cum"> cum
+        </th>
+        <td mat-cell *matCellDef="let medicamento"> {{medicamento.cum}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="atc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by atc"> Atc </th>
+        <td mat-cell *matCellDef="let medicamento"> {{medicamento.atc}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by descripcion"> Descripcion
+        </th>
+        <td mat-cell *matCellDef="let medicamento"> {{medicamento.descripcion}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

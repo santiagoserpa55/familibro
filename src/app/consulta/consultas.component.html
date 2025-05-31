@@ -1,0 +1,202 @@
+<mat-expansion-panel [expanded]="true" class="">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Buscador familibroapp</mat-panel-title>
+  </mat-expansion-panel-header>
+  <form [formGroup]="formulario" (ngSubmit)="applyFilter()">
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Escribe algo aquí <mat-icon>search</mat-icon></mat-label>
+      <input
+        matInput
+        placeholder="Escribe algo..."
+        formControlName="busqueda"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Razon Social</mat-label>
+      <mat-select formControlName="razon">
+        <mat-option *ngFor="let razon of razones" [value]="razon">
+          {{ razon }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option *ngFor="let estado of estados" [value]="estado">
+          {{ estado }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Tipo de contrato</mat-label>
+      <mat-select formControlName="contrato">
+        <mat-option *ngFor="let contrato of contratos" [value]="contrato">
+          {{ contrato }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="compact">
+      <mat-label>Departamentos</mat-label>
+      <mat-select formControlName="departamento">
+        <mat-option
+          *ngFor="let departamento of departamentos"
+          [value]="departamento"
+        >
+          {{ departamento }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <button type="submit" class="btn-consultar">
+        <mat-icon>search</mat-icon> Consultar
+      </button>
+      <button class="btn-limpiar"
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="clearFilters()"
+      ><mat-icon>clear</mat-icon>
+        Limpiar Filtros
+      </button>
+    </div>
+  </form>
+</mat-expansion-panel>
+
+<br />
+
+<table mat-table [dataSource]="dataSource" matSort class="main-content">
+  <ng-container matColumnDef="nit">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by Razon Social"
+    >
+      Nit
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.nit }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="razonSocial">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by razon social"
+    >
+      Razon Social
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.razonSocial }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="numContrato">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by numContrato"
+    >
+      Numero Contrato
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.numContrato }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by estado"
+    >
+      Estado
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.estado }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="departamento">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by phone number"
+    >
+      Departamento
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.departamento }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoContrato">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by address"
+    >
+      Tipo Contrato
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.tipoContrato }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="codTarifa">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by address"
+    >
+      Codigo Tarifa
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.codTarifa }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="codPropio">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by codPropio"
+    >
+      Codigo Propio
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.codPropio }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="descTarifa">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by address"
+    >
+      Descripcion Tarifa
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.descTarifa }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="valor">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by codPropio"
+    >
+      Valor
+    </th>
+    <td mat-cell *matCellDef="let contact">{{ contact.valor }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 20, 50]"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>

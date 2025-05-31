@@ -1,0 +1,81 @@
+<div class="menu-container"
+>
+  <!-- Logo en la esquina izquierda -->
+  <div>
+    <img
+      src="https://static.wixstatic.com/media/d95f89_91136017bd9f44f99a29cf360ad759d8~mv2.png"
+      alt="Logo"
+      style="height: 50px;"
+    />
+  </div>
+
+  <!-- Barra de herramientas -->
+  <mat-toolbar color="primary" style="flex: 1; justify-content: flex-end;">
+    <button
+      mat-icon-button
+      (click)="sidenav.toggle()"
+      id="menuIcon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span id="menuTitle" style="margin-right: auto; padding-left: 16px; color:35b5ee;"
+      >FamiLibro</span
+    >
+    <a mat-button routerLink="/" class="top-menu-item">
+      <mat-icon>home</mat-icon>Inicio
+    </a>
+    <a mat-button routerLink="/tecnologias" class="top-menu-item">
+      <mat-icon>people</mat-icon>Tecnologias
+    </a>
+    <a mat-button routerLink="/politicas" class="top-menu-item">
+      <mat-icon>playlist_add_check</mat-icon>Politicas
+    </a>
+        <a mat-button routerLink="/medicamentos" class="top-menu-item">
+      <mat-icon> local_hospital</mat-icon>Medicamentos
+    </a>
+  </mat-toolbar>
+</div>
+
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" mode="side">
+    <div class="side-nav-items">
+      <div>
+        <a
+          (click)="sidenav.close()"
+          mat-button
+          routerLink="/"
+          class="side-menu-item"
+          ><mat-icon>Inicio</mat-icon>Home</a
+        >
+      </div>
+
+      <div>
+        <a
+          (click)="sidenav.close()"
+          mat-button
+          routerLink="/contacts"
+          class="side-menu-item"
+          ><mat-icon>people</mat-icon>Contacts</a
+        >
+      </div>
+
+      <div>
+        <a
+          (click)="sidenav.close()"
+          mat-button
+          routerLink="/newcontact"
+          class="side-menu-item"
+          ><mat-icon>person_add</mat-icon>New Contact</a
+        >
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
