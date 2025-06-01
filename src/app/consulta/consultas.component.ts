@@ -24,9 +24,6 @@ export class ConsultasComponent implements OnInit {
   dataSource = new MatTableDataSource<Contact>();
 
   //implementando buscador interno
-
-
-
   columnsToDisplay = [
     'nit',
     'razonSocial',
@@ -39,7 +36,7 @@ export class ConsultasComponent implements OnInit {
     'descTarifa',
     'valor',
   ];
-  
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -163,13 +160,7 @@ export class ConsultasComponent implements OnInit {
   }
 
   clearFilters() {
-    // Restablecer los valores del formulario
     this.formulario.reset();
-
-    // Restablecer el filtro de la tabla
     this.dataSource.filter = '';
-
-    // Opcional: puedes volver a cargar los datos o resetear cualquier otra lógica
-    console.log('Filtros limpiados');
   }
 }

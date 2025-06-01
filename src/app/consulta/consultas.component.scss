@@ -1,16 +1,15 @@
-form {
-  width: 100%;
-}
-
 form mat-form-field {
-  width: 30%;
+  width: 27%;
   margin-right: 1rem;
+
+}
+form mat-form-field select {
+  width: 50%;
 }
 
-.btn-consultar {
+.botones-form button {
   padding: 8px 16px;
   font-size: 18px;
-  background-color: #35b5ee;
   color: white;
   border: none;
   border-radius: 50px;
@@ -21,14 +20,19 @@ form mat-form-field {
   gap: 8px;
   transition: background-color 0.3s ease;
 }
-.btn-limpiar {
-  font-size: 18px;
-  background-color: #12437f;
-  border-radius: 50px;
+.btn-consultar {
+  background-color: #35b5ee;
 }
+.btn-limpiar {
+  background-color: #12437f;
+}
+
 mat-expansion-panel {
+  width: 60%;
   font-size: xx-large;
-      margin-top: 80px;
+  margin-top: 80px;
+  border-radius: 25px;
+  margin: 0 auto;
 }
 mat-panel-title {
   color: #00458f;
@@ -36,4 +40,17 @@ mat-panel-title {
 table {
   width: 100%; /* Ocupa todo el ancho disponible */
   table-layout: fixed; /* Asegura que las columnas tengan tamaños uniformes */
+}
+.table-container {
+  width: 95%;
+  border-color: #35b5ee;
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 1px;
+}
+.container-expansion-panel {
+  margin-top: 80px;
+}
+table th {
+  background-color: #f2f2f2;
 }

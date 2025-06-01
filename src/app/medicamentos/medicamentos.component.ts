@@ -1,9 +1,9 @@
+import { Medicamentos } from './../interfaces/medicamentos';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Medicamentos } from '../interfaces/medicamentos';
 import { MedicamentosService } from '../services/medicamentos.service';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,7 +28,6 @@ export class MedicamentosComponent implements OnInit {
 
   constructor(
     private medicamentosService: MedicamentosService,
-    private dialog: MatDialog,
     private fb: FormBuilder
   ) {}
 
@@ -44,7 +43,7 @@ export class MedicamentosComponent implements OnInit {
 
   updateDataSource() {
     this.medicamentosService.getMedicamentos().subscribe({
-      next: (data) => {
+      next: (data: Medicamentos[]) => {
         this.cum = Array.from(new Set(data.map((contact) => contact.cum)));
         this.atc = Array.from(new Set(data.map((contact) => contact.atc)));
 
@@ -95,12 +94,12 @@ export class MedicamentosComponent implements OnInit {
     this.dataSource.filterPredicate = (data: Medicamentos, filter: string) => {
       const filters = JSON.parse(filter);
 
-      const matchesCums = filters.departamento
-        ? data.cum.toLowerCase().includes(filters. departamento.toLowerCase())
+      const matchesCums = filters.cum
+        ? data.cum.toLowerCase().includes(filters. cum.toLowerCase())
         : true;
 
-      const matchesAtc = filters.razon
-        ? data.atc.toLowerCase().includes(filters.razon.toLowerCase())
+      const matchesAtc = filters.atc
+        ? data.atc.toLowerCase().includes(filters.atc.toLowerCase())
         : true;
 
       const matchesBusqueda = filters.busqueda

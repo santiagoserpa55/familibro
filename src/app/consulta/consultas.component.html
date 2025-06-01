@@ -1,10 +1,11 @@
+<div class="container-expansion-panel">
 <mat-expansion-panel [expanded]="true" class="">
   <mat-expansion-panel-header>
-    <mat-panel-title>Buscador familibroapp</mat-panel-title>
+    <mat-panel-title>Buscador FamiLibro</mat-panel-title>
   </mat-expansion-panel-header>
   <form [formGroup]="formulario" (ngSubmit)="applyFilter()">
-    <mat-form-field appearance="outline" class="compact">
-      <mat-label>Escribe algo aquí <mat-icon>search</mat-icon></mat-label>
+    <mat-form-field appearance="outline" >
+      <mat-label>Escribe aquí <mat-icon>search</mat-icon></mat-label>
       <input
         matInput
         placeholder="Escribe algo..."
@@ -12,7 +13,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="compact">
+    <mat-form-field appearance="outline" >
       <mat-label>Razon Social</mat-label>
       <mat-select formControlName="razon">
         <mat-option *ngFor="let razon of razones" [value]="razon">
@@ -21,7 +22,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="compact">
+    <mat-form-field appearance="outline" >
       <mat-label>Estado</mat-label>
       <mat-select formControlName="estado">
         <mat-option *ngFor="let estado of estados" [value]="estado">
@@ -30,7 +31,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="compact">
+    <mat-form-field appearance="outline" >
       <mat-label>Tipo de contrato</mat-label>
       <mat-select formControlName="contrato">
         <mat-option *ngFor="let contrato of contratos" [value]="contrato">
@@ -39,7 +40,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="compact">
+    <mat-form-field appearance="outline" >
       <mat-label>Departamentos</mat-label>
       <mat-select formControlName="departamento">
         <mat-option
@@ -51,7 +52,7 @@
       </mat-select>
     </mat-form-field>
 
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <div class="botones-form" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
       <button type="submit" class="btn-consultar">
         <mat-icon>search</mat-icon> Consultar
       </button>
@@ -66,9 +67,10 @@
     </div>
   </form>
 </mat-expansion-panel>
+</div>
 
 <br />
-
+<div class="table-container">
 <table mat-table [dataSource]="dataSource" matSort class="main-content">
   <ng-container matColumnDef="nit">
     <th
@@ -200,3 +202,4 @@
   aria-label="Select page of periodic elements"
 >
 </mat-paginator>
+</div>
