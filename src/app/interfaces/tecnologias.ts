@@ -1,4 +1,4 @@
-export class Contact {
+export class Contrato {
 	constructor(
 		public nit: string,
 		public razonSocial: string,

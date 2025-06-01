@@ -1,11 +1,10 @@
 import { Medicamentos } from './../interfaces/medicamentos';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MedicamentosService } from '../services/medicamentos.service';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-medicamentos',
@@ -60,7 +59,6 @@ export class MedicamentosComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Medicamentos>(
           this.MedicamentosDataArray
         );
-        console.log(this.dataSource);
         this.dataSource = new MatTableDataSource<Medicamentos>(
           this.MedicamentosDataArray
         );
@@ -80,7 +78,7 @@ export class MedicamentosComponent implements OnInit {
             data.atc.toLowerCase().includes(filter)
           );
         };
-        console.log('Data loaded successfully');
+        //console.log('Data loaded successfully');
       },
     });
   }
@@ -125,13 +123,7 @@ export class MedicamentosComponent implements OnInit {
     // filtro automatico
   }
   clearFilters() {
-    // Restablecer los valores del formulario
     this.formulario.reset();
-
-    // Restablecer el filtro de la tabla
     this.dataSource.filter = '';
-
-    // Opcional: puedes volver a cargar los datos o resetear cualquier otra lógica
-    console.log('Filtros limpiados');
   }
 }

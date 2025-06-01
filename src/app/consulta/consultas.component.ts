@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ContactsService } from '../services/contacts.service';
-import { Contact } from '../interfaces/tecnologias';
+import { ContratosService } from '../services/contrato.service';
+import { Contrato } from '../interfaces/tecnologias';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -21,7 +21,7 @@ export class ConsultasComponent implements OnInit {
   contratos: string[] = ['Evento-PBS', 'Evento-NoPBS'];
   departamentos!: string[];
   razones!: string[];
-  dataSource = new MatTableDataSource<Contact>();
+  dataSource = new MatTableDataSource<Contrato>();
 
   //implementando buscador interno
   columnsToDisplay = [
@@ -41,7 +41,7 @@ export class ConsultasComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private contactsService: ContactsService,
+    private ContratosService: ContratosService,
     private fb: FormBuilder
   ) {}
 
@@ -58,13 +58,13 @@ export class ConsultasComponent implements OnInit {
   }
 
   updateDataSource() {
-    this.contactsService.getContacts().subscribe({
-      next: (data: Contact[]) => {
+    this.ContratosService.getContratos().subscribe({
+      next: (data: Contrato[]) => {
         // Obtener departamentos únicos
         this.departamentos = Array.from(
           new Set(data.map((contact) => contact.departamento))
         );
-        console.log(this.departamentos);
+        //console.log(this.departamentos);
         // obtener razones unicas razones
         this.razones = Array.from(
           new Set(data.map((contact) => contact.razonSocial))
@@ -81,7 +81,7 @@ export class ConsultasComponent implements OnInit {
         );
 
         // Crear el MatTableDataSource con los datos filtrados
-        this.dataSource = new MatTableDataSource<Contact>(
+        this.dataSource = new MatTableDataSource<Contrato>(
           this.contactsDataArray
         );
       },
@@ -103,7 +103,7 @@ export class ConsultasComponent implements OnInit {
     const departamento = this.formulario.get('departamento')?.value;
 
     // Crear una función personalizada para el filtro
-    this.dataSource.filterPredicate = (data: Contact, filter: string) => {
+    this.dataSource.filterPredicate = (data: Contrato, filter: string) => {
       const filters = JSON.parse(filter);
 
       const matchesDepartamento = filters.departamento
