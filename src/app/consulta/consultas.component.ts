@@ -6,7 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -14,7 +15,9 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
   styleUrls: ['./consultas.component.scss'],
 })
 export class ConsultasComponent implements OnInit {
-
+  razoness!: string[]; // Arreglo para almacenar las razones sociales obtenidas
+  razonCtrl = new FormControl(); // Control del formulario para el filtro
+  filteredRazones!: Observable<string[]>; // Observable para razones filtradas
   contactsDataArray: any = [];
   formulario!: FormGroup;
   estados: string[] = ['ACTIVO', 'SUSPENDIDO', 'TERMINADO'];
@@ -23,7 +26,6 @@ export class ConsultasComponent implements OnInit {
   razones!: string[];
   dataSource = new MatTableDataSource<Contrato>();
 
-  //implementando buscador interno
   columnsToDisplay = [
     'nit',
     'razonSocial',
@@ -46,6 +48,7 @@ export class ConsultasComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.filtroRazones();
     this.updateDataSource();
 
     this.formulario = this.fb.group({
@@ -53,7 +56,7 @@ export class ConsultasComponent implements OnInit {
       estado: [''],
       departamento: [''],
       contrato: [''],
-      razon:['']
+      razon: [''],
     });
   }
 
@@ -65,21 +68,10 @@ export class ConsultasComponent implements OnInit {
           new Set(data.map((contact) => contact.departamento))
         );
         //console.log(this.departamentos);
-        // obtener razones unicas razones
-        this.razones = Array.from(
-          new Set(data.map((contact) => contact.razonSocial))
-        );
-
         // Filtrar los departamentos únicos seleccionados
         this.contactsDataArray = data.filter((contact) =>
           this.departamentos.includes(contact.departamento)
         );
-
-        //filtrar razones
-        this.contactsDataArray = data.filter((contact) =>
-          this.razones.includes(contact.razonSocial)
-        );
-
         // Crear el MatTableDataSource con los datos filtrados
         this.dataSource = new MatTableDataSource<Contrato>(
           this.contactsDataArray
@@ -95,11 +87,33 @@ export class ConsultasComponent implements OnInit {
     });
   }
 
+  filtroRazones() {
+    this.ContratosService.getRazonesUnicas().subscribe({
+      next: (raz) => {
+        this.razoness = raz;
+        // Configurar el filtro reactivo
+        this.filteredRazones = this.razonCtrl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filterRazones(value || ''))
+        );
+      },
+      error: (err) => {
+        console.error('Error al obtener razones únicas:', err);
+      },
+    });
+  }
+  private _filterRazones(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.razoness.filter((razon) =>
+      razon.toLowerCase().includes(filterValue)
+    );
+  }
+
   applyFilter() {
     const busqueda = this.formulario.get('busqueda')?.value;
     const estado = this.formulario.get('estado')?.value;
     const contrato = this.formulario.get('contrato')?.value;
-    const razon = this.formulario.get('razon')?.value;
+    const razon = this.razonCtrl.value; // Obtener valor del FormControl independiente
     const departamento = this.formulario.get('departamento')?.value;
 
     // Crear una función personalizada para el filtro
@@ -112,10 +126,8 @@ export class ConsultasComponent implements OnInit {
             .includes(filters.departamento.toLowerCase())
         : true;
 
-        const matchesRazones = filters.razon
-        ? data.razonSocial
-            .toLowerCase()
-            .includes(filters.razon.toLowerCase())
+      const matchesRazones = filters.razon
+        ? data.razonSocial.toLowerCase().includes(filters.razon.toLowerCase())
         : true;
 
       const matchesEstado = filters.estado
@@ -150,7 +162,7 @@ export class ConsultasComponent implements OnInit {
       estado: estado || '',
       contrato: contrato || '',
       departamento: departamento || '',
-      razon:razon
+      razon: razon,
     };
 
     // Aplicar el filtro
@@ -162,5 +174,6 @@ export class ConsultasComponent implements OnInit {
   clearFilters() {
     this.formulario.reset();
     this.dataSource.filter = '';
+    this.razonCtrl.reset();
   }
 }

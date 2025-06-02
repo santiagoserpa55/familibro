@@ -19,7 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -59,6 +59,7 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';
         MatSelectModule,
         MatFormFieldModule,
         FlexLayoutModule,
+        MatAutocompleteModule,
         MatExpansionModule,
         BrowserAnimationsModule, // Requerido para Material
         MatExpansionModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
