@@ -1,10 +1,11 @@
 import { Medicamentos } from './../interfaces/medicamentos';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MedicamentosService } from '../services/medicamentos.service';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-medicamentos',
@@ -12,9 +13,14 @@ import { MedicamentosService } from '../services/medicamentos.service';
   styleUrls: ['./medicamentos.component.scss'],
 })
 export class MedicamentosComponent implements OnInit {
+  cums!: string[]; // Arreglo para almacenar las razones sociales obtenidas
+  atcs!: string[]; // Arreglo para almacenar las razones sociales obtenidas
   MedicamentosDataArray: any = [];
   formulario!: FormGroup;
-
+  cumCtrl = new FormControl();
+  atcCtrl = new FormControl();
+  filteredCums!: Observable<string[]>;
+  filteredAtcs!: Observable<string[]>;
   cum!: string[];
   atc!: string[];
 
@@ -32,7 +38,8 @@ export class MedicamentosComponent implements OnInit {
 
   ngOnInit() {
     this.updateDataSource();
-
+    this.filtroCums();
+    this.filtroAtcs();
     this.formulario = this.fb.group({
       busqueda: [''],
       cum: [''],
@@ -45,15 +52,6 @@ export class MedicamentosComponent implements OnInit {
       next: (data: Medicamentos[]) => {
         this.cum = Array.from(new Set(data.map((contact) => contact.cum)));
         this.atc = Array.from(new Set(data.map((contact) => contact.atc)));
-
-        // Filtrar los cums únicos seleccionados
-        this.MedicamentosDataArray = data.filter((contact) =>
-          this.cum.includes(contact.cum)
-        );
-
-        this.MedicamentosDataArray = data.filter((contact) =>
-          this.atc.includes(contact.atc)
-        );
 
         this.MedicamentosDataArray = data;
         this.dataSource = new MatTableDataSource<Medicamentos>(
@@ -83,10 +81,56 @@ export class MedicamentosComponent implements OnInit {
     });
   }
 
+    filtroCums() {
+      this.medicamentosService.getMedCumFilter().subscribe({
+        next: (cum) => {
+          this.cums = cum;
+          // Configurar el filtro reactivo
+          this.filteredCums = this.cumCtrl.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterCums(value || ''))
+          );
+        },
+        error: (err) => {
+          console.error('Error al obtener razones únicas:', err);
+        },
+      });
+    }
+    private _filterCums(value: string): string[] {
+      const filterValue = value.toLowerCase();
+      return this.cums.filter((cum) =>
+        cum.toLowerCase().includes(filterValue)
+      );
+    }
+
+
+    filtroAtcs() {
+      this.medicamentosService.getMedAtcFilter().subscribe({
+        next: (atc) => {
+          this.atcs = atc;
+          // Configurar el filtro reactivo
+          this.filteredAtcs = this.atcCtrl.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterAtcs(value || ''))
+          );
+        },
+        error: (err) => {
+          console.error('Error al obtener razones únicas:', err);
+        },
+      });
+    }
+    private _filterAtcs(value: string): string[] {
+      const filterValue = value.toLowerCase();
+      return this.atcs.filter((atc) =>
+        atc.toLowerCase().includes(filterValue)
+      );
+    }
+
+
   applyFilter() {
     const busqueda = this.formulario.get('busqueda')?.value;
-    const cum = this.formulario.get('cum')?.value;
-    const atc = this.formulario.get('atc')?.value;
+    const cum = this.cumCtrl.value;
+    const atc = this.atcCtrl.value;
 
     // Crear una función personalizada para el filtro
     this.dataSource.filterPredicate = (data: Medicamentos, filter: string) => {
@@ -125,5 +169,7 @@ export class MedicamentosComponent implements OnInit {
   clearFilters() {
     this.formulario.reset();
     this.dataSource.filter = '';
+    this.cumCtrl.reset();
+    this.atcCtrl.reset();
   }
 }
