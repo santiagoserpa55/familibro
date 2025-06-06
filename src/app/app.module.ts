@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-
 // Angular material
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home/home.component';
@@ -29,15 +28,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PoliticasComponent } from './pages/politicas/politicas.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
-
-
+import { ModalidadesComponent } from './pages/modalidades/modalidades.component';
 
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
         ConsultasComponent,
+        MedicamentosComponent,
+        ModalidadesComponent,
         PoliticasComponent,
-        MedicamentosComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

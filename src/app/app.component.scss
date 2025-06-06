@@ -1,3 +1,4 @@
+/* General styles for menu-container */
 .menu-container {
   display: flex;
   align-items: center;
@@ -11,35 +12,36 @@
   z-index: 1000;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-#menuTitle {
-  font-size: x-large; /* Aumenta el tamaño del texto */
-  margin-right: 20px;
-  color: #00458f; /* Cambia el color del texto a azul */
-  font-weight: bold; /* (Opcional) Hace el texto más destacado */
+
+#menuIcon {
+  display: block; /* Siempre visible */
+  color: #00458f; /* Color del ícono */
 }
 
 .mat-toolbar {
   height: 60px;
   display: flex;
   justify-content: flex-end;
-  background-color: white !important; /* Cambia el color de fondo aquí */
-  color: black !important; /* Cambia el color del texto si es necesario */
+  background-color: white !important;
+  color: black !important;
 }
 
 .mat-sidenav {
   background-color: #ffffff !important;
-  width: 160px;
+  width: 200px; /* Ajusta el ancho del menú lateral */
 }
 
 .side-nav-items {
-  display: flexbox;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  padding: 16px;
+  margin-top: 4em;
 }
 
 .side-menu-item {
-  color: white !important;
   margin-top: 20px;
+  color: black !important;
+  text-decoration: none;
 }
 
 .main-content {
@@ -47,76 +49,13 @@
 }
 
 @media (min-width: 900px) {
-  #menuIcon {
-    display: none;
+  .top-menu-item {
+    display: block; /* Mostrar opciones del menú superior en pantallas grandes */
   }
-
-  .mat-sidenav {
-    display: none;
-  }
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-}
-
-mat-toolbar img {
-  height: 40px; /* Ajusta el tamaño que prefieras */
-  margin-right: 10px; /* Espacio entre el logo y el texto */
 }
 
 @media (max-width: 900px) {
   .top-menu-item {
-    display: none;
-  }
-}
-
-.mat-toolbar {
-  height: 60px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.mat-sidenav {
-  background-color: #ffffff !important;
-  width: 160px;
-}
-
-.side-nav-items {
-  display: flexbox;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.side-menu-item {
-  color: white !important;
-  margin-top: 20px;
-}
-
-.main-content {
-  margin: 20px;
-}
-
-@media (min-width: 900px) {
-  #menuIcon {
-    display: none;
-  }
-
-  .mat-sidenav {
-    display: none;
-  }
-}
-.logo {
-  width: 100px;
-  height: auto;
-}
-mat-toolbar img {
-  height: 40px; /* Ajusta el tamaño que prefieras */
-  margin-right: 10px; /* Espacio entre el logo y el texto */
-}
-@media (max-width: 900px) {
-  .top-menu-item {
-    display: none;
+    display: none; /* Ocultar opciones del menú superior en pantallas pequeñas */
   }
 }
