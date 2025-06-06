@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ContratosService } from '../services/contrato.service';
 import { Contrato } from '../interfaces/tecnologias';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MatSort } from '@angular/material/sort';
@@ -41,6 +40,8 @@ export class ConsultasComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+    // Obtén la referencia al elemento
+  @ViewChild('inputSearch') inputSearch!: ElementRef;
 
   constructor(
     private ContratosService: ContratosService,
@@ -60,6 +61,10 @@ export class ConsultasComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    // Activa el foco al cargar el componente
+    this.inputSearch.nativeElement.focus();
+  }
   updateDataSource() {
     this.ContratosService.getContratos().subscribe({
       next: (data: Contrato[]) => {

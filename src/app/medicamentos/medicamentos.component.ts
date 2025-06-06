@@ -1,5 +1,5 @@
 import { Medicamentos } from './../interfaces/medicamentos';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -30,6 +30,7 @@ export class MedicamentosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('inputSearch') inputSearch!: ElementRef;
 
   constructor(
     private medicamentosService: MedicamentosService,
@@ -45,6 +46,11 @@ export class MedicamentosComponent implements OnInit {
       cum: [''],
       atc: [''],
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Activa el foco al cargar el componente
+    this.inputSearch.nativeElement.focus();
   }
 
   updateDataSource() {
