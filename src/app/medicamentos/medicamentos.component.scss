@@ -14,3 +14,10 @@ table {
 table th {
   background-color: #f2f2f2;
 }
+
+.input-small {
+  width: 150px; /* Reduce el ancho */
+  height: 30px; /* Reduce el alto */
+  padding: 4px; /* Ajusta el espacio interno */
+  font-size: 12px; /* Tamaño de texto más pequeño */
+}
