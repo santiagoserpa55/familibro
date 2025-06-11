@@ -26,7 +26,7 @@ export class MedicamentosComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Medicamentos>();
 
-  columnsToDisplay = ['cum', 'atc', 'descripcion'];
+  columnsToDisplay = ['cum', 'atc', 'descripcion','tarifa'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -137,6 +137,7 @@ export class MedicamentosComponent implements OnInit {
     const busqueda = this.formulario.get('busqueda')?.value;
     const cum = this.cumCtrl.value;
     const atc = this.atcCtrl.value;
+
 
     // Crear una función personalizada para el filtro
     this.dataSource.filterPredicate = (data: Medicamentos, filter: string) => {
