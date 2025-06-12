@@ -56,6 +56,6 @@
 
 @media (max-width: 900px) {
   .top-menu-item {
-    display: none; /* Ocultar opciones del menú superior en pantallas pequeñas */
+    display: block; /* Ocultar opciones del menú superior en pantallas pequeñas */
   }
 }
