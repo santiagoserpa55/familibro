@@ -11,17 +11,17 @@ export class MedicamentosService {
   constructor(private http: HttpClient) { }
 
   getMedicamentos() {
-    return this.http.get<Medicamentos[]>('http://localhost:8080/medicamentos');
+    return this.http.get<Medicamentos[]>('https://familibrobackend.onrender.com/medicamentos');
   }
 
   getMedCumFilter(): Observable<string[]> {
-    return this.http.get<Medicamentos[]>('http://localhost:8080/filtroMedCum').pipe(
+    return this.http.get<Medicamentos[]>('https://familibrobackend.onrender.com/filtroMedCum').pipe(
       map((medicamentos: Medicamentos[]) => medicamentos.map((med) => med.cum ))
     );
   }
 
   getMedAtcFilter(): Observable<string[]> {
-    return this.http.get<Medicamentos[]>('http://localhost:8080/filtroMedAtc').pipe(
+    return this.http.get<Medicamentos[]>('https://familibrobackend.onrender.com/filtroMedAtc').pipe(
       map((medicamentos: Medicamentos[]) => medicamentos.map((med) => med.atc))
     );
   }

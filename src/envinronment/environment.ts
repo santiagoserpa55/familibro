@@ -1,6 +1,6 @@
 export const environment = {
   api: {
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://familibrobackend.onrender.com',
     contratos: 'contratos',
     medicamentos: 'medicamentos',
     razonesUnicas: 'getRazonUnica'
