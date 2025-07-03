@@ -1,17 +1,44 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ContratosService } from '../services/contrato.service';
 import { Contrato } from '../interfaces/tecnologias';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
-import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { map, Observable, startWith } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-contacts',
   templateUrl: './consultas.component.html',
   styleUrls: ['./consultas.component.scss'],
+  imports:[
+       MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatSlideToggleModule,
+        MatPaginatorModule,
+        JsonPipe,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatPaginatorModule,
+        CommonModule
+  ]
 })
 export class ConsultasComponent implements OnInit {
   razoness!: string[]; // Arreglo para almacenar las razones sociales obtenidas

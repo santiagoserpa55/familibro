@@ -1,16 +1,49 @@
 import { Medicamentos } from './../interfaces/medicamentos';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+} from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MedicamentosService } from '../services/medicamentos.service';
 import { map, Observable, startWith } from 'rxjs';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms'; // si usas FormControl
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { JsonPipe } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatOptionModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-medicamentos',
   templateUrl: './medicamentos.component.html',
   styleUrls: ['./medicamentos.component.scss'],
+  standalone: true,
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatSlideToggleModule,
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    CommonModule
+  ],
 })
 export class MedicamentosComponent implements OnInit {
   cums!: string[]; // Arreglo para almacenar las razones sociales obtenidas
@@ -26,7 +59,7 @@ export class MedicamentosComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Medicamentos>();
 
-  columnsToDisplay = ['cum', 'atc', 'descripcion','tarifa'];
+  columnsToDisplay = ['cum', 'atc', 'descripcion', 'tarifa'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -87,64 +120,57 @@ export class MedicamentosComponent implements OnInit {
     });
   }
 
-    filtroCums() {
-      this.medicamentosService.getMedCumFilter().subscribe({
-        next: (cum) => {
-          this.cums = cum;
-          // Configurar el filtro reactivo
-          this.filteredCums = this.cumCtrl.valueChanges.pipe(
-            startWith(''),
-            map((value) => this._filterCums(value || ''))
-          );
-        },
-        error: (err) => {
-          console.error('Error al obtener razones únicas:', err);
-        },
-      });
-    }
-    private _filterCums(value: string): string[] {
-      const filterValue = value.toLowerCase();
-      return this.cums.filter((cum) =>
-        cum.toLowerCase().includes(filterValue)
-      );
-    }
+  filtroCums() {
+    this.medicamentosService.getMedCumFilter().subscribe({
+      next: (cum) => {
+        this.cums = cum;
+        // Configurar el filtro reactivo
+        this.filteredCums = this.cumCtrl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filterCums(value || ''))
+        );
+      },
+      error: (err) => {
+        console.error('Error al obtener razones únicas:', err);
+      },
+    });
+  }
+  private _filterCums(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.cums.filter((cum) => cum.toLowerCase().includes(filterValue));
+  }
 
-
-    filtroAtcs() {
-      this.medicamentosService.getMedAtcFilter().subscribe({
-        next: (atc) => {
-          this.atcs = atc;
-          // Configurar el filtro reactivo
-          this.filteredAtcs = this.atcCtrl.valueChanges.pipe(
-            startWith(''),
-            map((value) => this._filterAtcs(value || ''))
-          );
-        },
-        error: (err) => {
-          console.error('Error al obtener razones únicas:', err);
-        },
-      });
-    }
-    private _filterAtcs(value: string): string[] {
-      const filterValue = value.toLowerCase();
-      return this.atcs.filter((atc) =>
-        atc.toLowerCase().includes(filterValue)
-      );
-    }
-
+  filtroAtcs() {
+    this.medicamentosService.getMedAtcFilter().subscribe({
+      next: (atc) => {
+        this.atcs = atc;
+        // Configurar el filtro reactivo
+        this.filteredAtcs = this.atcCtrl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filterAtcs(value || ''))
+        );
+      },
+      error: (err) => {
+        console.error('Error al obtener razones únicas:', err);
+      },
+    });
+  }
+  private _filterAtcs(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.atcs.filter((atc) => atc.toLowerCase().includes(filterValue));
+  }
 
   applyFilter() {
     const busqueda = this.formulario.get('busqueda')?.value;
     const cum = this.cumCtrl.value;
     const atc = this.atcCtrl.value;
 
-
     // Crear una función personalizada para el filtro
     this.dataSource.filterPredicate = (data: Medicamentos, filter: string) => {
       const filters = JSON.parse(filter);
 
       const matchesCums = filters.cum
-        ? data.cum.toLowerCase().includes(filters. cum.toLowerCase())
+        ? data.cum.toLowerCase().includes(filters.cum.toLowerCase())
         : true;
 
       const matchesAtc = filters.atc
