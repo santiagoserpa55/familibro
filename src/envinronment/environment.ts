@@ -1,6 +1,7 @@
 export const environment = {
   api: {
-    baseURL: 'http://localhost:8082',
+   // baseURL: 'http://localhost:8082',
+     baseURL: 'https://familibroapp.vercel.app',
     contratos: 'tecnologias',
     medicamentos: 'medicamentos',
     razonesUnicas: 'getRazonUnica'

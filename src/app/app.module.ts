@@ -1,65 +1,64 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-// Angular material
-import { MatButtonModule } from '@angular/material/button';
-import { HomeComponent } from './home/home.component';
-import { ConsultasComponent } from './consulta/consultas.component';
+
+/* ---------- Angular Material ---------- */
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatOption, MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { PoliticasComponent } from './pages/politicas/politicas.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
+/* ---------- (Opcional) Flex‑Layout ---------- */
+// Si seguiste nuestra recomendación de la fork actualizada:
+//import { FlexLayoutModule } from 'ngx-flexible-layout';   // o '@ngbracket/ngx-layout'
+
+/* ---------- App & feature components ---------- */
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { ConsultasComponent } from './consulta/consultas.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { ModalidadesComponent } from './pages/modalidades/modalidades.component';
+import { PoliticasComponent } from './pages/politicas/politicas.component';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-@NgModule({ declarations: [
-        AppComponent,
-        HomeComponent,
-        ConsultasComponent,
-        MedicamentosComponent,
-        ModalidadesComponent,
-        PoliticasComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatTableModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatOptionModule,
-        MatInputModule,
-        MatSelectModule,
-        MatFormFieldModule,
-        FlexLayoutModule,
-        MatAutocompleteModule,
-        MatExpansionModule,
-        BrowserAnimationsModule, // Requerido para Material
-        MatExpansionModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
-export class AppModule { }
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ModalidadesComponent,
+    PoliticasComponent,
+  ], imports:[
+    MatTableModule,
+    BrowserModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    RouterModule,
+        RouterModule,        // ← añade esto si aún no lo tienes
+    BrowserAnimationsModule,
+    AppRoutingModule
+  ],
+
+  providers: [provideHttpClient(withInterceptorsFromDi())],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
