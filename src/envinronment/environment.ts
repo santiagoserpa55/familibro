@@ -1,7 +1,7 @@
 export const environment = {
   api: {
     baseURL: 'https://familibrobackend.onrender.com',
-    contratos: 'contratos',
+    contratos: 'tecnologias',
     medicamentos: 'medicamentos',
     razonesUnicas: 'getRazonUnica'
     //authURL: 'api/v1/auth/signin',
