@@ -42,3 +42,9 @@ table th {
   padding: 4px; /* Ajusta el espacio interno */
   font-size: 12px; /* Tamaño de texto más pequeño */
 }
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
