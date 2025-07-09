@@ -14,6 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { JsonPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   standalone: true,
@@ -37,7 +38,8 @@ import { CommonModule } from '@angular/common';
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatPaginatorModule,
-        CommonModule
+        CommonModule,
+        MatProgressSpinnerModule
   ]
 })
 export class ConsultasComponent implements OnInit {
